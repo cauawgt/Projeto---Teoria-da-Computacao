@@ -1,11 +1,10 @@
-from __future__ import annotations # Permite usar AFD como tipo de retorno dentro da própria classe
+from __future__ import annotations 
 from collections import defaultdict
 
 
 class AFD:
     """
-    Representa um Autómato Finito Determinístico (AFD).
-    Esta classe é um contentor de dados genérico para um AFD.
+    Autómato Finito Determinístico (AFD).
     """
 
     def __init__(self, estados=None, alfabeto=None, transicoes=None, estado_inicial=None, estados_finais=None):
@@ -16,7 +15,7 @@ class AFD:
         self.estados_finais = estados_finais or set()
 
     def __str__(self):
-        """Retorna uma representação em string do AFD para fácil visualização."""
+        """Representação em string do AFD."""
         transicoes_str = ""
         # Ordena para uma saída consistente e legível
         for origem, transicao in sorted(self.transicoes.items()):
@@ -34,7 +33,7 @@ class AFD:
         """
 
     def salvar_automato(self, filepath: str):
-        """Salva o autómato num ficheiro de texto no formato especificado."""
+        """Salva o autômato."""
         with open(filepath, 'w', encoding='utf-8') as f:
             f.write(f"TIPO:AFD\n")
             f.write(f"ESTADOS:{','.join(sorted(list(self.estados)))}\n")
@@ -42,10 +41,10 @@ class AFD:
             f.write(f"INICIAL:{self.estado_inicial}\n")
             f.write(f"FINAIS:{','.join(sorted(list(self.estados_finais)))}\n")
             f.write("TRANSICOES:\n")
-            for origin_state in sorted(list(self.estados)):
-                if origin_state in self.transicoes:
-                    for symbol, dest_state in sorted(self.transicoes[origin_state].items()):
-                        f.write(f"{origin_state},{symbol},{dest_state}\n")
+            for origem_estado in sorted(list(self.estados)):
+                if origem_estado in self.transicoes:
+                    for simbolo, destino_estado in sorted(self.transicoes[origem_estado].items()):
+                        f.write(f"{origem_estado},{simbolo},{destino_estado}\n")
         print(f"✔ AFD salvo com sucesso em '{filepath}'")
 
     @classmethod
@@ -82,7 +81,6 @@ class AFD:
 class AFDBuscaPadrao(AFD):
     """
     Classe especializada que É um AFD para busca de padrões.
-    Esta classe herda de AFD e se autoconfigura no construtor.
     """
 
     def __init__(self, padrao: str):
@@ -112,12 +110,14 @@ class AFDBuscaPadrao(AFD):
         self.alfabeto = set(padrao)
 
         print(f"Construindo AFD para o padrão '{padrao}'...")
+
         for estado_atual_int in range(tamanho_padrao + 1):
             estado_atual_str = str(estado_atual_int)
             for caractere_lido in self.alfabeto:
                 prefixo_do_padrao = padrao[:estado_atual_int]
                 string_teste = prefixo_do_padrao + caractere_lido
-                proximo_estado = 0
+                
+                proximo_estado = 0 
                 tamanho_maximo_prefixo = min(tamanho_padrao, len(string_teste))
 
                 for k in range(tamanho_maximo_prefixo, 0, -1):

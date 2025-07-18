@@ -13,8 +13,6 @@ from .afd import AFDBuscaPadrao
 from .afnd import AFND
 from .afnd import AFNDBuscaPadrao
 
-# Expõe os algoritmos e funções principais da biblioteca
-from .conversao import convert_afnd_to_afd
 
 __version__ = "1.0.0"
 
