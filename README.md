@@ -1,6 +1,6 @@
 -----
 
-# Biblioteca de Autómatos Finitos (`pyautomata`)
+# Biblioteca de Autómatos Finitos 
 
 Este projeto consiste numa biblioteca em Python para a criação, manipulação e utilização de **Autómatos Finitos Determinísticos (AFD)** e **Não-Determinísticos (AFND)**. A principal funcionalidade implementada é a **busca de padrões em texto**, utilizando a abordagem clássica da teoria da computação: construir um autómato que reconhece um padrão e, em seguida, usá-lo para processar um texto de forma eficiente.
 
@@ -107,42 +107,3 @@ O fluxo de trabalho para encontrar um padrão é um excelente exemplo do poder d
 ### 1\. Construir o AFND
 
 Primeiro, construímos um AFND para o padrão `"aba"`. O resultado é um autômato simples com 4 estados (`q0` a `q3`), onde o caminho `q0 -> q1 -> q2 -> q3` reconhece "aba". O estado `q0` tem um laço para "esperar" pelo início do padrão.
-
-```python
-# Em examples/exemplo_busca_padrao.py
-
-from pyautomata import build_pattern_nfa, convert_afnd_to_afd, search_with_afd
-
-padrao = "aba"
-alfabeto = {'a', 'b', 'c'}
-
-# Constrói um autômato não-determinístico, que é mais simples de modelar
-afnd_padrao = build_pattern_nfa(padrao, alfabeto)
-
-print(afnd_padrao)
-```
-
-### 2\. Converter para AFD
-
-A simulação de um AFND é complexa. Por isso, convertemo-lo num AFD equivalente. O AFD resultante pode ter mais estados (macro-estados), mas a sua execução é linear e muito mais rápida.
-
-```python
-# Converte o modelo simples (AFND) para um modelo eficiente (AFD)
-afd_padrao = convert_afnd_to_afd(afnd_padrao)
-
-print(afd_padrao)
-```
-
-### 3\. Realizar a Busca
-
-Finalmente, usamos o AFD determinístico para processar o texto. A função `search_with_afd` simplesmente percorre o texto, atualizando o estado do autômato a cada caractere. Quando um estado final é alcançado, uma ocorrência do padrão é registada.
-
-```python
-texto = "ababacaababa"
-
-# Usa o AFD para encontrar o padrão no texto de forma eficiente
-indices_encontrados = search_with_afd(texto, afd_padrao, len(padrao))
-
-print(f"Padrão '{padrao}' encontrado nos índices: {indices_encontrados}")
-# Saída esperada: [0, 6, 9]
-```
