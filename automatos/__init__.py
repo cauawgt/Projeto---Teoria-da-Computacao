@@ -11,9 +11,10 @@ e utilizar Autómatos Finitos Determinísticos (AFD) e Não-Determinísticos (AF
 from .afd import AFD
 from .afd import AFDBuscaPadrao
 from .afnd import AFND
+from .afnd import AFNDBuscaPadrao
 
 # Expõe os algoritmos e funções principais da biblioteca
-
+from .conversao import convert_afnd_to_afd
 
 __version__ = "1.0.0"
 

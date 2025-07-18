@@ -1,5 +1,3 @@
-# pyautomata/conversion.py
-
 # Usa imports relativos para aceder a outras partes do mesmo pacote
 from .afd import AFD
 from .afnd import AFND
