@@ -31,6 +31,21 @@ class AFD:
          - Transições d:
 {transicoes_str}
         """
+    
+    def aceita(self, cadeia: str) -> bool:
+        """
+        Simula a execução do AFD para determinar se a cadeia de entrada é aceita.
+        """
+        estado_atual = self.estado_inicial
+        result = False
+        for i, caractere_do_texto in enumerate(cadeia):
+            estado_atual = self.transicoes.get(estado_atual, {}).get(
+                caractere_do_texto, self.estado_inicial)
+        
+        if estado_atual in self.estados_finais:
+            result = True
+        
+        return result
 
     def salvar_automato(self, filepath: str):
         """Salva o autômato."""
@@ -48,31 +63,31 @@ class AFD:
         print(f"✔ AFD salvo com sucesso em '{filepath}'")
 
     @classmethod
-    def from_file(cls, filepath: str) -> AFD:
-        """Cria uma instância de AFD a partir de um ficheiro (método de fábrica)."""
+    def abrir_arquivo(cls, filepath: str) -> AFD:
+        """Cria uma instância de AFD a partir de um ficheiro."""
         afd = cls()
         with open(filepath, 'r', encoding='utf-8') as f:
-            lines = [line.strip() for line in f if line.strip()]
+            linhas = [line.strip() for line in f if line.strip()]
 
-        parsing_transitions = False
-        for line in lines:
-            if line.startswith("TRANSICOES:"):
-                parsing_transitions = True
+        analisando_transicoes = False
+        for linha in linhas:
+            if linha.startswith("TRANSICOES:"):
+                analisando_transicoes = True
                 continue
 
-            if not parsing_transitions:
-                if ':' in line:
-                    key, value = line.split(':', 1)
-                    if key == "ESTADOS" and value: afd.estados = set(value.split(','))
-                    elif key == "ALFABETO" and value: afd.alfabeto = set(value.split(','))
-                    elif key == "INICIAL": afd.estado_inicial = value
-                    elif key == "FINAIS" and value: afd.estados_finais = set(value.split(','))
+            if not analisando_transicoes:
+                if ':' in linha:
+                    chave, valor = linha.split(':', 1)
+                    if chave == "ESTADOS" and valor: afd.estados = set(valor.split(','))
+                    elif chave == "ALFABETO" and valor: afd.alfabeto = set(valor.split(','))
+                    elif chave == "INICIAL": afd.estado_inicial = valor
+                    elif chave == "FINAIS" and valor: afd.estados_finais = set(valor.split(','))
             else:
                 try:
-                    origin, symbol, dest = line.split(',')
-                    afd.transicoes[origin][symbol] = dest
+                    origem, simbolo, destino = linha.split(',')
+                    afd.transicoes[origem][simbolo] = destino
                 except ValueError:
-                    print(f"Aviso: Linha de transição mal formatada ignorada: '{line}'")
+                    print(f"Aviso: Linha de transição mal formatada ignorada: '{linha}'")
         
         print(f"✔ AFD carregado com sucesso de '{filepath}'")
         return afd
@@ -133,17 +148,15 @@ class AFDBuscaPadrao(AFD):
     def buscar(self, texto: str) -> list[int]:
         """
         Executa a busca pelo padrão no texto usando a lógica de simulação
-        correta e robusta do AFD.
+        do AFD.
         """
-        # Usa os atributos do próprio objeto (self)
         estado_atual = self.estado_inicial
         indices_encontrados = []
 
         for i, caractere_do_texto in enumerate(texto):
             # Obtém o próximo estado. O default é o estado inicial.
             estado_atual = self.transicoes.get(estado_atual, {}).get(
-                caractere_do_texto, self.estado_inicial
-            )
+                caractere_do_texto, self.estado_inicial)
 
             if estado_atual in self.estados_finais:
                 indice_inicial = i - self.tamanho_padrao + 1

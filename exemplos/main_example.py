@@ -4,17 +4,18 @@ import os
 
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
-
-from automatos import AFDBuscaPadrao
+from automatos import AFD, AFDBuscaPadrao
 
 
 if __name__ == "__main__":
     # --- Definições Iniciais ---
-    automato1 = AFDBuscaPadrao("ab")
+    estados = {'1', '2', '3'}
+    alfabeto = {'0', '1'}
+    estado_inicial = '1'
+    estados_finais = {'2'}
+    transicoes = {'1': {'0': '1', '1': '2'},
+                  '2': {'1': '2', '0': '3'},
+                  '3': {'0': '2', '1': '2'}}
+    automato1 = AFD(estados, alfabeto, transicoes, estado_inicial, estados_finais)
     print(automato1)
-    # --- Exemplo de uso ---
-    texto = "Ola, este é um exemplo de texto com o padrão ab. ababsdksvbababba"
-    resultados = automato1.buscar(texto)
-    print("Resultados da busca:", resultados)
-    automato1.salvar_automato("afd_exemplo.txt")
-    
+    print(automato1.aceita("1017"))
