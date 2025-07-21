@@ -163,3 +163,33 @@ class AFDBuscaPadrao(AFD):
                 indices_encontrados.append(indice_inicial)
 
         return indices_encontrados
+    
+    @classmethod
+    def abrir_arquivo(cls, filepath: str, padrao: str) -> AFD:
+        """Cria uma instância de AFD a partir de um ficheiro."""
+        afd = cls(padrao)
+        with open(filepath, 'r', encoding='utf-8') as f:
+            linhas = [line.strip() for line in f if line.strip()]
+
+        analisando_transicoes = False
+        for linha in linhas:
+            if linha.startswith("TRANSICOES:"):
+                analisando_transicoes = True
+                continue
+
+            if not analisando_transicoes:
+                if ':' in linha:
+                    chave, valor = linha.split(':', 1)
+                    if chave == "ESTADOS" and valor: afd.estados = set(valor.split(','))
+                    elif chave == "ALFABETO" and valor: afd.alfabeto = set(valor.split(','))
+                    elif chave == "INICIAL": afd.estado_inicial = valor
+                    elif chave == "FINAIS" and valor: afd.estados_finais = set(valor.split(','))
+            else:
+                try:
+                    origem, simbolo, destino = linha.split(',')
+                    afd.transicoes[origem][simbolo] = destino
+                except ValueError:
+                    print(f"Aviso: Linha de transição mal formatada ignorada: '{linha}'")
+        
+        print(f"✔ AFD carregado com sucesso de '{filepath}'")
+        return afd

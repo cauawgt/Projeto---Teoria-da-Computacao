@@ -4,8 +4,7 @@ import collections.abc # Para checagem de tipo iterável
 
 class AFND:
     """
-    Representa um Autómato Finito Não-Determinístico (AFND),
-    incluindo suporte para transições épsilon (ε).
+    Autómato Finito Não-Determinístico (AFND)
     """
     # Constante para representar a transição épsilon.
     EPSILON = "&"
@@ -23,7 +22,6 @@ class AFND:
     def __str__(self):
         """Retorna uma representação em string do AFND para fácil visualização."""
         transicoes_str = ""
-        # Ordena para uma saída consistente e legível
         for origem, transicao in sorted(self.transicoes.items()):
             for simbolo, destinos in sorted(transicao.items()):
                 # Os destinos são um conjunto, então os ordenamos para exibição.

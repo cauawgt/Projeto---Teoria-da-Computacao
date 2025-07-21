@@ -4,7 +4,7 @@ import os
 
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
-from automatos import AFD, AFDBuscaPadrao
+from automatos import AFD, AFDBuscaPadrao, AFNDBuscaPadrao, AFND
 
 
 if __name__ == "__main__":
@@ -19,3 +19,7 @@ if __name__ == "__main__":
     automato1 = AFD(estados, alfabeto, transicoes, estado_inicial, estados_finais)
     print(automato1)
     print(automato1.aceita("1017"))
+    
+    print("="*40)
+    automato2 = AFNDBuscaPadrao("AB")
+    print(automato2)

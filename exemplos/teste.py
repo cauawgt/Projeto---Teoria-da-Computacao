@@ -21,4 +21,13 @@ t = {0: {'a': 1, 'b': 0},
      2: {'a': 1, 'b': 0}
      }
 
-print(t.get(1, {}).get('b', -1))
+# print(t.get(1, {}).get('b', -1))
+
+# Dicionário de transicões de estado (AB)
+transicoes = {0: {'A': 1, 'B': 0},
+              1: {'A': 1, 'B': 2},
+              2: {'A': 1, 'B': 0}}
+
+estado_atual = 0
+print(transicoes.get(estado_atual))
+print(transicoes.get(estado_atual).get('B'))
