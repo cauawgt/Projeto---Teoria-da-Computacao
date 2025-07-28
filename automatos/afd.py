@@ -95,7 +95,7 @@ class AFD:
 
 class AFDBuscaPadrao(AFD):
     """
-    Classe especializada que É um AFD para busca de padrões.
+    É um AFD para busca de padrões.
     """
 
     def __init__(self, padrao: str):

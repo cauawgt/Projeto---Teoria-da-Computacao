@@ -1,33 +1,19 @@
-from collections import defaultdict
+from __future__ import annotations
+import sys
+import os
 
-transicoes = defaultdict()
 
-# o defaultdict é um dicionário,
-# mas com um comportamento extra: quando você tenta acessar uma
-# chave que ainda não existe, ele cria automaticamente um valor
-# padrão para ela, ao invés de lançar um erro.
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+from gramatica_livre_contexto import GLC
 
-transicoes[0] = {'a': 1, 'b': 0}
-transicoes[1] = {'a': 1, 'b': 2}
-transicoes[2] = {'a': 1, 'b': 0}
 
-estado_atual = 1
+if __name__ == "__main__":
+    variaveis = {'A', 'B'}
+    terminais = {'0', '1', '#'}
+    varia_ini = 'A'
+    regras = {'A': {1: '0A1', 2:'B'}, 
+              'B': {1: '#'}}
+    glc = GLC(variaveis, terminais, regras, varia_ini)
 
-# print(transicoes.get(estado_atual, {}))
-
-# Without defaultdict
-t = {0: {'a': 1, 'b': 0},
-     1: {'a': 1, 'b': 2},
-     2: {'a': 1, 'b': 0}
-     }
-
-# print(t.get(1, {}).get('b', -1))
-
-# Dicionário de transicões de estado (AB)
-transicoes = {0: {'A': 1, 'B': 0},
-              1: {'A': 1, 'B': 2},
-              2: {'A': 1, 'B': 0}}
-
-estado_atual = 0
-print(transicoes.get(estado_atual))
-print(transicoes.get(estado_atual).get('B'))
+    print(glc)
+    print(glc.derivar('0#10#1'))
