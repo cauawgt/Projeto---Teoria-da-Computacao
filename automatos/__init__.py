@@ -12,6 +12,7 @@ from .afd import AFD
 from .afd import AFDBuscaPadrao
 from .afnd import AFND
 from .afnd import AFNDBuscaPadrao
+from .ap import AP
 
 
 __version__ = "1.0.0"

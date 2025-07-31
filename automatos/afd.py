@@ -4,7 +4,7 @@ from collections import defaultdict
 
 class AFD:
     """
-    Autómato Finito Determinístico (AFD).
+    Autômato Finito Determinístico (AFD).
     """
 
     def __init__(self, estados=None, alfabeto=None, transicoes=None, estado_inicial=None, estados_finais=None):

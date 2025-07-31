@@ -4,7 +4,7 @@ import collections.abc # Para checagem de tipo iterável
 
 class AFND:
     """
-    Autómato Finito Não-Determinístico (AFND)
+    Autômato Finito Não-Determinístico (AFND)
     """
     # Constante para representar a transição épsilon.
     EPSILON = "&"
