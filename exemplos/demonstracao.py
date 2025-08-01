@@ -79,5 +79,5 @@ def demonstracao_glc_para_ap():
 
 
 if __name__ == "__main__":
-    # demonstracao_afd_para_glc()
+    demonstracao_afd_para_glc()
     demonstracao_glc_para_ap()

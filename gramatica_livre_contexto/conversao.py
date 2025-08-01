@@ -3,29 +3,35 @@ from gramatica_livre_contexto import GLC
 
 def conversao_AFD_para_GLC(afd: AFD) -> GLC:
     """
-    Realiza a conversão de um AFD para uma Gramática Regular
+    Realiza a conversão de um AFD para uma Gramática Livre de Contexto (Regular)
+    utilizando a estrutura de dados consistente.
     """
     variaveis = set(afd.estados)
     terminais = set(afd.alfabeto)
     variavel_inicial = afd.estado_inicial
     regras = dict()
 
+    # Inicializa cada variável com uma LISTA vazia para suas produções
     for estado in afd.estados:
-        regras[estado] = {}
+        regras[estado] = []
 
+    # Regra 1: Para cada transição d(q_i, a) = q_j, adiciona a regra q_i -> a q_j
     for estado_partida, transicoes in afd.transicoes.items():
-        num_regra = 1
         for simbolo, estado_destino in transicoes.items():
-            regras[estado_partida][num_regra] = [simbolo, estado_destino]
-            num_regra += 1
+            # Simplesmente adiciona a produção à lista
+            regras[estado_partida].append([simbolo, estado_destino])
     
-    # Regra 2: R_i -> ε para cada estado de aceitação
+    # Regra 2: Para cada estado final q_f, adiciona a regra q_f -> ε
     for estado_final in afd.estados_finais:
-        # Garante que o número da regra seja único para o estado final
-        num_regra = max(regras[estado_final].keys(), default=0) + 1
-        regras[estado_final][num_regra] = ['ε']
+        regras[estado_final].append(['ε'])
 
-    glc = GLC(variaveis, terminais, regras, variavel_inicial)
+    # Cria a GLC com a estrutura de regras correta
+    glc = GLC(
+        V=variaveis, 
+        E=terminais, 
+        R=regras, 
+        S=variavel_inicial
+    )
     return glc
 
 def conversao_GLC_para_AP(glc: GLC) -> AP:
