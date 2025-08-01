@@ -61,7 +61,6 @@ def demonstracao_glc_para_ap():
     print("Passo 1: Definimos a seguinte GLC (para a linguagem não-regular 0^n 1^n):")
     print(glc_exemplo)
 
-    # O restante do código permanece o mesmo.
     print("\nPasso 2: Executando a função conversao_GLC_para_AP...")
     try:
         ap_resultante = conversao_GLC_para_AP(glc_exemplo)
@@ -71,7 +70,6 @@ def demonstracao_glc_para_ap():
         print(ap_resultante)
     except Exception as e:
         print(f"Ocorreu um erro durante a conversão: {e}")
-        # Imprime o traceback para mais detalhes, se necessário
         import traceback
         traceback.print_exc()
 
