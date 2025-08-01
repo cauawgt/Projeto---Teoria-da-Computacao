@@ -52,26 +52,34 @@ def demonstracao_glc_para_ap():
         E={'0', '1'},
         S='S',
         R={
-            'S': {
-                1: ['0', 'S', '1'],
-                2: ['ε']
-            }
+            'S': [
+                ['0', 'S', '1'],
+                ['ε']
+            ]
         }
     )
     print("Passo 1: Definimos a seguinte GLC (para a linguagem não-regular 0^n 1^n):")
     print(glc_exemplo)
 
+    # O restante do código permanece o mesmo.
     print("\nPasso 2: Executando a função conversao_GLC_para_AP...")
-    ap_resultante = conversao_GLC_para_AP(glc_exemplo)
-    print("✔ Conversão concluída!")
+    try:
+        ap_resultante = conversao_GLC_para_AP(glc_exemplo)
+        print("✔ Conversão concluída!")
 
-    print("\nPasso 3: O Autômato com Pilha resultante é:")
-    print(ap_resultante)
+        print("\nPasso 3: O Autômato com Pilha resultante é:")
+        print(ap_resultante)
+    except Exception as e:
+        print(f"Ocorreu um erro durante a conversão: {e}")
+        # Imprime o traceback para mais detalhes, se necessário
+        import traceback
+        traceback.print_exc()
+
     print("="*50)
     print("FIM DA DEMONSTRAÇÃO 2")
     print("="*50)
 
 
 if __name__ == "__main__":
-    demonstracao_afd_para_glc()
+    # demonstracao_afd_para_glc()
     demonstracao_glc_para_ap()
