@@ -22,18 +22,11 @@ class GLC:
         """
         Retorna uma representação em string da gramática, formatada para leitura.
         """
-        # ... (o início do método pode ser um pouco diferente, mas a lógica é a mesma)
         
         regras_str = "R (Regras de Produção):\n"
         for variavel, producoes in self.R.items():
-            # AQUI ESTÁ A CORREÇÃO:
-            # Antes era 'producoes.values()', agora iteramos diretamente em 'producoes',
-            # pois é uma lista de listas.
             producoes_formatadas = [" ".join(p) for p in producoes]
             regras_str += f"  {variavel} -> {' | '.join(producoes_formatadas)}\n"
-
-        # O restante do método que formata V, E, S deve ser mantido como está.
-        # O código abaixo é uma sugestão completa para o método.
         
         v_str = f"V = {self.V}"
         e_str = f"E = {self.E}"
